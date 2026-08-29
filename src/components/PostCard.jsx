@@ -1,5 +1,5 @@
 import dbService from "../appwrite/db";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import storageService from "../appwrite/storage";
 
 function PostCard($id, title, featureImage) {

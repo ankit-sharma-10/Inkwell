@@ -15,7 +15,7 @@ export class StorageService {
 
   async uploadFile(file) {
     try {
-      const result = await this.storage.createFile({
+      const result = await this.bucket.createFile({
         bucketId: conf.appwriteBucketID,
         fileId: ID.unique(),
         file: file,
@@ -29,7 +29,7 @@ export class StorageService {
 
   async getFile(fileId) {
     try {
-      const result = await this.storage.getFile({
+      const result = await this.bucket.getFile({
         bucketId: conf.appwriteBucketID,
         fileId: fileId,
       });
@@ -42,7 +42,7 @@ export class StorageService {
 
   getFilePreview(fileId) {
     try {
-      const result = this.storage.getFilePreview({
+      const result = this.bucket.getFilePreview({
         bucketId: conf.appwriteBucketID,
         fileId: fileId,
         width: 800,
@@ -54,10 +54,10 @@ export class StorageService {
       throw error;
     }
   }
-  
+
   async deleteFile(fileId) {
     try {
-      const result = await this.storage.deleteFile({
+      const result = await this.bucket.deleteFile({
         bucketId: conf.appwriteBucketID,
         fileId: fileId,
       });

@@ -15,7 +15,7 @@ export class DBService {
 
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
-      const result = await this.databases.createDocument({
+      const result = await this.database.createDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,
@@ -39,7 +39,7 @@ export class DBService {
 
   async deletePost({ slug }) {
     try {
-      const result = await this.databases.deleteDocument({
+      const result = await this.database.deleteDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,
@@ -55,7 +55,7 @@ export class DBService {
 
   async getPost({ slug }) {
     try {
-      const result = await this.databases.getDocument({
+      const result = await this.database.getDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,
@@ -68,10 +68,10 @@ export class DBService {
       return false;
     }
   }
-  
+
   async getPosts(queries = [Query.equal("status", "active")]) {
     try {
-      const result = await this.databases.getDocument({
+      const result = await this.database.getDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         queries: queries,
@@ -87,7 +87,7 @@ export class DBService {
 
   async updatePost(slug, { title, content, featuredImage, status }) {
     try {
-      const result = await this.databases.updateDocument({
+      const result = await this.database.updateDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,

@@ -23,7 +23,7 @@ export class AuthService {
       });
 
       if (user) {
-        this.login({ email, password });
+        return await this.login({ email, password });
       } else {
         return user;
       }
@@ -54,6 +54,10 @@ export class AuthService {
       }
       return user;
     } catch (error) {
+      // 401 means there is no active session
+      if (error.code === 401) {
+        return null;
+      }
       console.log(error);
       throw error;
     }

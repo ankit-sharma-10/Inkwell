@@ -1,69 +1,62 @@
 import conf from "../conf/conf";
-import { Client, Storage, ID } from "appwrite";
+import client from "./client";
+import { Storage, ID } from "appwrite";
 
 export class StorageService {
-  client = new Client();
   bucket;
 
   constructor() {
-    this.client
-      .setEndpoint(conf.appwriteEndpoint)
-      .setProject(conf.appwriteProjectID);
-
-    this.bucket = new Storage(this.client);
+    this.bucket = new Storage(client);
   }
 
   async uploadFile(file) {
     try {
-      const result = await this.bucket.createFile({
+      return await this.bucket.createFile({
         bucketId: conf.appwriteBucketID,
         fileId: ID.unique(),
         file: file,
       });
-      return result;
     } catch (error) {
-      console.log(error);
+      console.error("StorageService.uploadFile failed:", error);
       throw error;
     }
   }
 
   async getFile(fileId) {
     try {
-      const result = await this.bucket.getFile({
+      return await this.bucket.getFile({
         bucketId: conf.appwriteBucketID,
         fileId: fileId,
       });
-      return result;
     } catch (error) {
-      console.log(error);
+      console.error("StorageService.getFile failed:", error);
       throw error;
     }
   }
 
   getFilePreview(fileId) {
     try {
-      const result = this.bucket.getFilePreview({
+      return this.bucket.getFilePreview({
         bucketId: conf.appwriteBucketID,
         fileId: fileId,
         width: 800,
         quality: 80,
       });
-      return result;
     } catch (error) {
-      console.log(error);
+      console.error("StorageService.getFilePreview failed:", error);
       throw error;
     }
   }
 
   async deleteFile(fileId) {
     try {
-      const result = await this.bucket.deleteFile({
+      await this.bucket.deleteFile({
         bucketId: conf.appwriteBucketID,
         fileId: fileId,
       });
       return true;
     } catch (error) {
-      console.log(error);
+      console.error("StorageService.deleteFile failed:", error);
       return false;
     }
   }

@@ -1,23 +1,25 @@
 import { Link } from "react-router-dom";
 import storageService from "../appwrite/storage";
 
-function PostCard({ $id, title, slug, featuredImage }) {
+function PostCard({ title, slug, featuredImage }) {
   return (
-    <Link to={`/post/${slug}`}>
-      <div className="w-full rounded-xl bg-gray-100 p-4">
-        <div className="mb-4 w-full justify-center">
+    <Link to={`/post/${slug}`} className="group block">
+      <div className="glass-card glass-card-hover overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl group-hover:shadow-accent-500/5">
+        <div className="aspect-[16/10] overflow-hidden">
           <img
             src={storageService.getFilePreview(featuredImage)}
             alt={title}
-            className="rounded-xl"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-
-        <h2 className="text-xl font-bold">{title}</h2>
+        <div className="p-5">
+          <h2 className="text-lg font-semibold text-neutral-100 line-clamp-2 group-hover:text-accent-400 transition-colors duration-200">
+            {title}
+          </h2>
+        </div>
       </div>
     </Link>
   );
 }
 
 export default PostCard;
-

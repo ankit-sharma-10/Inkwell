@@ -7,20 +7,18 @@ function LogoutBtn() {
 
   const logoutHandler = () => {
     authService
-      // logout() -> authService function
       .logout()
       .then(() => {
-        // logout() -> authSlice reducer
         dispatch(logout());
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Logout failed:", error);
       });
   };
 
   return (
     <button
-      className="inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
+      className="inline-block px-4 py-2 text-sm font-medium text-neutral-300 hover:text-neutral-100 hover:bg-black/5 rounded-lg transition-all duration-200"
       onClick={logoutHandler}
     >
       Logout

@@ -1,21 +1,17 @@
 import conf from "../conf/conf";
-import { Client, ID, Databases, Query } from "appwrite";
+import client from "./client";
+import { ID, Databases, Query } from "appwrite";
 
 export class DBService {
-  client = new Client();
   database;
 
   constructor() {
-    this.client
-      .setEndpoint(conf.appwriteEndpoint)
-      .setProject(conf.appwriteProjectID);
-
-    this.database = new Databases(this.client);
+    this.database = new Databases(client);
   }
 
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
-      const result = await this.database.createDocument({
+      return await this.database.createDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,
@@ -28,82 +24,67 @@ export class DBService {
           userId,
         },
       });
-
-      console.log(result);
-      return result;
     } catch (error) {
-      console.log(error);
+      console.error("DBService.createPost failed:", error);
       throw error;
     }
   }
 
   async deletePost({ slug }) {
     try {
-      const result = await this.database.deleteDocument({
+      await this.database.deleteDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,
       });
-
-      console.log(result);
       return true;
     } catch (error) {
-      console.log(error);
+      console.error("DBService.deletePost failed:", error);
       return false;
     }
   }
 
   async getPost({ slug }) {
     try {
-      const result = await this.database.getDocument({
+      return await this.database.getDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,
       });
-
-      console.log(result);
-      return result;
     } catch (error) {
-      console.log(error);
+      console.error("DBService.getPost failed:", error);
       return false;
     }
   }
 
   async getPosts(queries = [Query.equal("status", "active")]) {
     try {
-      const result = await this.database.getDocument({
+      return await this.database.listDocuments({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         queries: queries,
       });
-
-      console.log(result);
-      return result;
     } catch (error) {
-      console.log(error);
+      console.error("DBService.getPosts failed:", error);
       return false;
     }
   }
 
   async updatePost(slug, { title, content, featuredImage, status }) {
     try {
-      const result = await this.database.updateDocument({
+      return await this.database.updateDocument({
         databaseId: conf.appwriteDbID,
         collectionId: conf.appwriteTableID,
         documentId: slug,
         data: {
           title,
-          slug,
           content,
           featuredImage,
           status,
         },
       });
-
-      console.log(result);
-      return result;
     } catch (error) {
-      console.log(error);
+      console.error("DBService.updatePost failed:", error);
       throw error;
     }
   }

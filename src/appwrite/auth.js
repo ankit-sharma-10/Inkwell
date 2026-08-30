@@ -1,16 +1,11 @@
-import conf from "../conf/conf";
-import { Client, Account, ID } from "appwrite";
+import client from "./client";
+import { Account, ID } from "appwrite";
 
 export class AuthService {
-  client = new Client();
   account;
 
   constructor() {
-    this.client
-      .setEndpoint(conf.appwriteEndpoint)
-      .setProject(conf.appwriteProjectID);
-
-    this.account = new Account(this.client);
+    this.account = new Account(client);
   }
 
   async createAccount({ userName, email, password }) {
@@ -28,7 +23,7 @@ export class AuthService {
         return user;
       }
     } catch (error) {
-      console.log(error);
+      console.error("AuthService.createAccount failed:", error);
       throw error;
     }
   }
@@ -40,7 +35,7 @@ export class AuthService {
         password: password,
       });
     } catch (error) {
-      console.log(error);
+      console.error("AuthService.login failed:", error);
       throw error;
     }
   }
@@ -58,7 +53,7 @@ export class AuthService {
       if (error.code === 401) {
         return null;
       }
-      console.log(error);
+      console.error("AuthService.getCurrentUser failed:", error);
       throw error;
     }
   }
@@ -67,7 +62,7 @@ export class AuthService {
     try {
       await this.account.deleteSessions();
     } catch (error) {
-      console.log(error);
+      console.error("AuthService.logout failed:", error);
       throw error;
     }
   }

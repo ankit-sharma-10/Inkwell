@@ -104,21 +104,23 @@ function PostForm({ post }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+    <form
+      onSubmit={handleSubmit(submit)}
+      className="flex flex-col lg:flex-row gap-8"
+    >
+      {/* Main Content Column */}
+      <div className="flex-1 space-y-5">
         <Input
-          label="Title:"
-          placeholder="Title"
-          className="mb-4"
+          label="Title"
+          placeholder="Your post title"
           {...register("title", {
             required: true,
           })}
         />
 
         <Input
-          label="Slug:"
-          placeholder="Slug"
-          className="mb-4"
+          label="Slug"
+          placeholder="url-friendly-slug"
           {...register("slug", {
             required: true,
           })}
@@ -130,50 +132,51 @@ function PostForm({ post }) {
         />
 
         <RTE
-          label="Content:"
+          label="Content"
           name="content"
           control={control}
           defaultValue={getValues("content")}
         />
       </div>
 
-      <div className="w-1/3 px-2">
-        <Input
-          label="Featured Image:"
-          type="file"
-          className="mb-4"
-          accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image", {
-            required: !post,
-          })}
-        />
+      {/* Sidebar Column */}
+      <div className="w-full lg:w-80 space-y-5">
+        <div className="glass-card p-6 space-y-5">
+          <Input
+            label="Featured Image"
+            type="file"
+            accept="image/png, image/jpg, image/jpeg, image/gif"
+            {...register("image", {
+              required: !post,
+            })}
+          />
 
-        {post && post.featuredImage && (
-          <div className="mb-4 w-full">
-            <img
-              src={storageService.getFilePreview(post.featuredImage)}
-              alt={post.title}
-              className="rounded-lg"
-            />
-          </div>
-        )}
+          {post && post.featuredImage && (
+            <div className="rounded-xl overflow-hidden border border-glass-border">
+              <img
+                src={storageService.getFilePreview(post.featuredImage)}
+                alt={post.title}
+                className="w-full object-cover"
+              />
+            </div>
+          )}
 
-        <Select
-          options={["active", "inactive"]}
-          label="Status"
-          className="mb-4"
-          {...register("status", {
-            required: true,
-          })}
-        />
+          <Select
+            options={["active", "inactive"]}
+            label="Status"
+            {...register("status", {
+              required: true,
+            })}
+          />
 
-        <Button
-          type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
-        >
-          {post ? "Update" : "Submit"}
-        </Button>
+          <Button
+            type="submit"
+            variant={post ? "success" : "primary"}
+            className="w-full"
+          >
+            {post ? "Update Post" : "Publish Post"}
+          </Button>
+        </div>
       </div>
     </form>
   );

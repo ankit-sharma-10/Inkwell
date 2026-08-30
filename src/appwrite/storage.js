@@ -1,6 +1,6 @@
 import conf from "../conf/conf";
 import client from "./client";
-import { Storage, ID } from "appwrite";
+import { Storage, ID, Permission, Role } from "appwrite";
 
 export class StorageService {
   bucket;
@@ -15,6 +15,7 @@ export class StorageService {
         bucketId: conf.appwriteBucketID,
         fileId: ID.unique(),
         file: file,
+        permissions: [Permission.read(Role.any())],
       });
     } catch (error) {
       console.error("StorageService.uploadFile failed:", error);
@@ -35,16 +36,28 @@ export class StorageService {
   }
 
   getFilePreview(fileId) {
+    if (!fileId) return "";
     try {
-      return this.bucket.getFilePreview({
+      return this.bucket.getFileView({
         bucketId: conf.appwriteBucketID,
         fileId: fileId,
-        width: 800,
-        quality: 80,
       });
     } catch (error) {
       console.error("StorageService.getFilePreview failed:", error);
-      throw error;
+      return "";
+    }
+  }
+
+  getFileView(fileId) {
+    if (!fileId) return "";
+    try {
+      return this.bucket.getFileView({
+        bucketId: conf.appwriteBucketID,
+        fileId: fileId,
+      });
+    } catch (error) {
+      console.error("StorageService.getFileView failed:", error);
+      return "";
     }
   }
 

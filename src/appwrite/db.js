@@ -17,7 +17,6 @@ export class DBService {
         documentId: slug,
         data: {
           title,
-          slug,
           content,
           featuredImage,
           status,

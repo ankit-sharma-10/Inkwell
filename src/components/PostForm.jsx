@@ -15,9 +15,10 @@ function PostForm({ post }) {
     useForm({
       defaultValues: {
         title: post?.title || "",
-        slug: post?.slug || "",
+        slug: post?.$id || post?.slug || "",
         content: post?.content || "",
-        featuredImage: post?.featuredImage || "",
+        featuredImage:
+          post?.featuredImage || post?.featuredimage || post?.image || "",
         status: post?.status || "active",
       },
     });
@@ -54,7 +55,8 @@ function PostForm({ post }) {
       let dbPost;
 
       if (post) {
-        let featuredImage = post.featuredImage;
+        let featuredImage =
+          post.featuredImage || post.featuredimage || post.image;
 
         if (data.image?.[0]) {
           const file = await storageService.uploadFile(data.image[0]);
@@ -68,7 +70,7 @@ function PostForm({ post }) {
           }
         }
 
-        dbPost = await dbService.updatePost(post.slug, {
+        dbPost = await dbService.updatePost(post.$id || post.slug, {
           title: data.title,
           content: data.content,
           featuredImage,

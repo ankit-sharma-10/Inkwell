@@ -41,7 +41,7 @@ export default function Post() {
 
   const deletePost = async () => {
     try {
-      const status = await dbService.deletePost({ slug: post.slug });
+      const status = await dbService.deletePost({ slug: post.$id || post.slug });
 
       if (status) {
         if (post.featuredImage) {
@@ -92,7 +92,7 @@ export default function Post() {
             {/* Author Actions Overlay */}
             {isAuthor && (
               <div className="absolute top-4 right-4 flex items-center gap-2">
-                <Link to={`/edit-post/${post.slug}`}>
+                <Link to={`/edit-post/${post.$id || post.slug}`}>
                   <Button variant="success" className="text-xs px-4 py-2">
                     Edit
                   </Button>

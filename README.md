@@ -1,16 +1,86 @@
-# React + Vite
+# Inkwell
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern minimalist blogging platform built with React, Vite, and Appwrite. Share your ideas with the world through a clean, elegant interface.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Authentication** — Sign up, sign in, and session management powered by Appwrite
+- **Create & Edit Posts** — Rich text editor (TinyMCE) with image uploads
+- **Browse Posts** — Responsive grid layout with animated post cards
+- **Author Controls** — Edit and delete your own posts
+- **Modern UI** — Light minimalist design with Inter font, glassmorphism cards, smooth animations, and responsive layout
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer | Technology |
+|-------|------------|
+| Framework | [React 19](https://react.dev) |
+| Build Tool | [Vite 8](https://vite.dev) |
+| Styling | [Tailwind CSS 4](https://tailwindcss.com) |
+| State Management | [Redux Toolkit](https://redux-toolkit.js.org) |
+| Forms | [React Hook Form](https://react-hook-form.com) |
+| Rich Text Editor | [TinyMCE](https://www.tiny.cloud) |
+| Backend | [Appwrite](https://appwrite.io) (Auth, Database, Storage) |
+| Routing | [React Router 7](https://reactrouter.com) |
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js 18+
+- An [Appwrite](https://appwrite.io) project with Auth, Database, and Storage configured
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Create a .env file with your Appwrite credentials
+# (see .env.example below)
+
+# Start the dev server
+npm run dev
+```
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+VITE_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+VITE_APPWRITE_PROJECT_ID=your_project_id
+VITE_APPWRITE_DATABASE_ID=your_database_id
+VITE_APPWRITE_TABLE_ID=your_collection_id
+VITE_APPWRITE_BUCKET_ID=your_bucket_id
+```
+
+## Project Structure
+
+```
+src/
+├── appwrite/          # Appwrite service layer (auth, db, storage, shared client)
+├── components/        # Reusable UI components (Header, Footer, Button, Input, PostCard, PostForm, RTE, etc.)
+├── conf/              # Environment config
+├── pages/             # Route-level page components (Home, AllPosts, Post, AddPost, EditPost, Login, Signup)
+├── store/             # Redux store & slices
+├── index.css          # Design system (theme tokens, animations, utilities)
+├── App.jsx            # Root layout with auth initialization
+└── main.jsx           # Entry point with router & Redux provider
+```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+| `npm run lint:fix` | Auto-fix lint issues |
+| `npm run format` | Format code with Prettier |
+| `npm run format:check` | Check code formatting |
+
+## License
+
+This project is private.

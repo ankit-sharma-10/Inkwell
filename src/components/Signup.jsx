@@ -15,11 +15,12 @@ function Signup() {
   const signup = async (data) => {
     setError("");
     try {
-      const userData = await authService.createAccount(data);
-      if (userData) {
+      const session = await authService.createAccount(data);
+
+      if (session) {
         const userData = await authService.getCurrentUser();
         if (userData) {
-          dispatch(authLogin(userData));
+          dispatch(authLogin({ userData }));
         }
         navigate("/");
       }
@@ -57,8 +58,8 @@ function Signup() {
             <Input
               label="Full Name: "
               placeholder="Enter your Full Name"
-              type="string"
-              {...register("name", {
+              type="text"
+              {...register("userName", {
                 required: true,
               })}
             />

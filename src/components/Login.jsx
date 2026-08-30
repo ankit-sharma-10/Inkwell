@@ -19,7 +19,7 @@ function Login() {
       if (session) {
         const userData = await authService.getCurrentUser();
         if (userData) {
-          dispatch(authLogin(userData));
+          dispatch(authLogin({ userData }));
         }
         navigate("/");
       }
@@ -50,6 +50,7 @@ function Login() {
           </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+        {/* handleSubmit is a method where you pass your loginHandler or formHandler, beacuse it comes from useForm of React Hook Forms*/}
         <form onSubmit={handleSubmit(login)} className="mt-8">
           <div className="space-y-5">
             <Input
@@ -70,7 +71,7 @@ function Login() {
               label="Password: "
               placeholder="Enter your password"
               type="password"
-              {...register("email", {
+              {...register("password", {
                 required: true,
                 validate: {
                   matchPattern: (value) =>

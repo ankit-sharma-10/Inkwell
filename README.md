@@ -2,6 +2,8 @@
 
 A modern minimalist blogging platform built with React, Vite, and Appwrite. Share your ideas with the world through a clean, elegant interface.
 
+**Live Demo:** [https://inkwell-smoky.vercel.app/](https://inkwell-smoky.vercel.app/)
+
 ## Features
 
 - **Authentication** — Sign up, sign in, and session management powered by Appwrite
